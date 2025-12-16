@@ -1,0 +1,14 @@
+@import "tailwindcss";
+@import "tailwindcss/preflight";
+@import "tailwindcss/utilities";
+@layer utilities {
+    .text-primary {
+        color: var(--color-primary);
+    }
+    .text-bg {
+        color: var(--color-bg);
+    }
+    .text-description {
+        color: var(--color-description);
+    }
+}

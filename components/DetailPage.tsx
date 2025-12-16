@@ -1,9 +1,7 @@
 "use client"
-import Container from '@/components/Container'
-import { bank } from '@/utils/data';
+import { bank } from '../utils/data';
 import { ArrowLeftOutlined } from "@ant-design/icons"
-import { Button, Form, Image, Input, InputNumber, Select } from 'antd';
-import { useRouter } from 'next/navigation';
+import { Button, Card, Form, Input, InputNumber, Select } from 'antd';
 import React, { useState } from 'react';
 import PhoneInput from 'react-phone-input-2'
 
@@ -13,15 +11,12 @@ interface props {
 }
 const FormItem = Form.Item;
 const DetailPage: React.FC<props> = ({ handleConfirm, handleGoBack }) => {
- const router = useRouter();
     const [form] = Form.useForm();
     const [ steps, setSteps ] = useState(1);
     const [ accountName, setAccountName ] = useState("")
     const handleBack = () => {
         if(steps === 2) return setSteps(1);
-        // router.back();
         if(handleGoBack) handleGoBack();
-        else router.back();
     }
 
     const handleNext = () => {
@@ -34,10 +29,12 @@ const DetailPage: React.FC<props> = ({ handleConfirm, handleGoBack }) => {
         })
     }
   return (
-    <Container
-        action={<FormItem >
-            <Button htmlType="submit" className='w-full' onClick={handleNext} type='primary'>Next</Button>
-        </FormItem>}
+    <Card
+
+    classNames={{ body: "crypto-card-body", actions: "crypto-card-actions"}}
+        actions={[<FormItem key={1}>
+            <Button htmlType="submit" style={{ width: "100%" }} className='w-full' onClick={handleNext} type='primary'>Next</Button>
+        </FormItem>]}
     >
         <div className='flex items-center w-full md:gap-[45%] gap-[25%]'>
             <ArrowLeftOutlined className="cursor-pointer" onClick={handleBack} />
@@ -53,8 +50,13 @@ const DetailPage: React.FC<props> = ({ handleConfirm, handleGoBack }) => {
                         showSearch
                         placeholder="Select an Option"
                         optionRender={(option) => (
-                        <div className="flex items-center gap-3 py-2">
-                        <Image
+                        <div style={{ 
+              display: "flex",
+              alignItems: "center",
+              gap: 12,
+              paddingBottom: 8, paddingTop: 8
+            }} >
+                        <img
                             src={option.data.icon}
                             alt={option.label as string}
                             width={24}
@@ -84,10 +86,10 @@ const DetailPage: React.FC<props> = ({ handleConfirm, handleGoBack }) => {
                     <PhoneInput 
                         placeholder='Enter your phone number'
                         country="ng"
-                        inputClass='md:pl-[146px]!'
-                        buttonClass='md:w-[136px]! flex justify-center'
+                        inputClass='width-19'
+                        buttonClass='width-136'
                         inputStyle={{width: "100%", height:60, borderRadius: 30, backgroundColor: "transparent"}}
-                        buttonStyle={{ borderTopLeftRadius: 30, borderBottomLeftRadius: 30 }}
+                        buttonStyle={{ borderTopLeftRadius: 30, borderBottomLeftRadius: 30, display: "flex", justifyContent: "center" }}
                         containerStyle={{ borderRadius: 30 }}
                         
                    
@@ -95,7 +97,7 @@ const DetailPage: React.FC<props> = ({ handleConfirm, handleGoBack }) => {
                 </FormItem>
             </>}
         </Form>
-    </Container>
+    </Card>
   )
 }
 

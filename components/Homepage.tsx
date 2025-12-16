@@ -1,9 +1,6 @@
 "use client"
-import Container from "@/components/Container";
-import SelectInfo from "@/components/SelectInfo";
+import SelectInfo from "../components/SelectInfo";
 import { Button, Card, Form, Segmented, Select } from "antd";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
 import React, { useState, useTransition } from "react";
 
 const FormItem = Form.Item;
@@ -74,7 +71,6 @@ interface props {
     handleNext: () => void;
 }
 const Homepage: React.FC<props> = ({ handleNext }) => {
-  const router = useRouter();
   const [form] = Form.useForm();
   const [ active, setActive ] = useState("Crypto to cash");
   const [ isPending, startTransition ] = useTransition();
@@ -99,23 +95,38 @@ const Homepage: React.FC<props> = ({ handleNext }) => {
     //     router.push("/recipient-details");
     //   })
         if(handleNext) handleNext()
-        else startTransition(() => {
-            router.push("/recipient-details");
-        })
+        // else startTransition(() => {
+        //     router.push("/recipient-details");
+        // })
     })
   }
   return (
-    <Container>
-      <div className="flex items-center justify-center mb-4!">
+    <Card
+      classNames={{ body: "crypto-card-body", actions: "crypto-card-actions"}}
+    >
+      <div 
+        style={{ 
+          display: "flex",
+          alignItems: "center",
+          marginBottom: 16,
+          justifyContent: "center"
+        }}
+      >
         <Segmented 
           options={["Crypto to cash", "Cash to crypto", "Crypto to fiat loan"]}
           defaultValue={active}
           onChange={(value) => setActive(value)}
           value={active}
+          styles={{ item: { height: 34, borderRadius: 30 }, }}
         />
       </div>
 
-      <div className="flex flex-col gap-6">
+      <div style={{ 
+        display: "flex",
+        // alignItems: "center",
+        flexDirection: "column",
+        gap: 24,
+      }} >
         <SelectInfo 
           description="You pay"
           amount={1}
@@ -142,8 +153,13 @@ const Homepage: React.FC<props> = ({ handleNext }) => {
             showSearch
             placeholder="Select an Option"
             optionRender={(option) => (
-            <div className="flex items-center gap-3 py-2">
-              <Image
+            <div style={{ 
+              display: "flex",
+              alignItems: "center",
+              gap: 12,
+              paddingBottom: 8, paddingTop: 8
+            }}>
+              <img
                 src={option.data.icon}
                 alt={option.label as string}
                 width={24}
@@ -161,8 +177,13 @@ const Homepage: React.FC<props> = ({ handleNext }) => {
             showSearch
             placeholder="Select an Option"
             optionRender={(option) => (
-            <div className="flex items-center gap-3 py-2">
-              <Image
+            <div style={{ 
+              display: "flex",
+              alignItems: "center",
+              gap: 12,
+              paddingBottom: 8, paddingTop: 8
+            }}>
+              <img
                 src={option.data.icon}
                 alt={option.label as string}
                 width={24}
@@ -174,11 +195,11 @@ const Homepage: React.FC<props> = ({ handleNext }) => {
           />
         </FormItem>
 
-        <FormItem label="" className="mt-12!">
-          <Button htmlType="submit" loading={isPending} type="primary" className="w-full">Convert Now</Button>
+        <FormItem label="" style={{ marginTop: 48 }}>
+          <Button htmlType="submit" loading={isPending} type="primary" style={{ width: "100%"}}>Convert Now</Button>
         </FormItem>
       </Form>
-    </Container>
+    </Card>
   );
 }
 

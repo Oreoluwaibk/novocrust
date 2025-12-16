@@ -1,5 +1,4 @@
-import { Dropdown, DropDownProps, Input, Menu, Select, SelectProps } from 'antd'
-import Image from 'next/image'
+import { Input, Select } from 'antd'
 import React, { useMemo, useState } from 'react'
 
 type Option = {
@@ -32,10 +31,20 @@ const SelectInfo: React.FC<InfoProps> = ({
     )
   }, [selectOption, search])
   return (
-  <div className='rounded-[30px] border! border-[#E0E0E0]! p-6! flex items-end justify-between h-28'>
-    <div className='flex flex-col gap-4'>
-      <span className='text-description font-medium text-base'>{description}</span>
-      <span className='text-primary text-2xl font-semibold'>{amount.toFixed(2)}</span>
+  <div style={{
+    borderRadius: 30,
+    borderWidth:1,
+    borderColor: "#E0E0E0",
+    borderStyle: "solid",
+    padding: 24,
+    display: "flex",
+    alignItems: "flex-end",
+    justifyContent: "space-between",
+    minHeight: 112
+  }} >
+    <div style={{ display: "flex", flexDirection: "column", gap: 16 }} >
+      <span style={{ fontWeight: "500", fontSize: 16, color: "#828282"}} >{description}</span>
+      <span style={{ fontWeight: "600", fontSize: 24, color: "#000E10" }} >{amount.toFixed(2)}</span>
     </div>
       
     <Select
@@ -52,7 +61,7 @@ const SelectInfo: React.FC<InfoProps> = ({
         value: option.value,
         label: (
           <div className="flex items-center gap-2">
-            <Image src={option.icon} alt={option.label} width={16} height={16} />
+            <img src={option.icon} alt={option.label} width={16} height={16} />
             <span>{option.label}</span>
           </div>
         ),
@@ -60,16 +69,15 @@ const SelectInfo: React.FC<InfoProps> = ({
       }))}
       popupStyle={{ width: 254, padding: "10px" }}
       popupRender={(menu) => (
-        <div style={{ width: 244 }} className="flex flex-col justify-center">
-          <div className="flex items-center justify-center" style={{ width: 230 }}>
+        <div style={{ width: 244, display: "flex", flexDirection: "column", justifyContent: "center" }}>
+          <div  style={{ width: 230, display: "flex", alignItems: "center", justifyContent: "center" }}>
             <Input
               placeholder="Search"
               value={search}
               // prefix={<Sea}
               onChange={(e) => setSearch(e.target.value)}
               allowClear
-              style={{ height: 44 }}
-              className='py-1!'
+              style={{ height: 44, paddingTop: 4, paddingBottom: 4 }}
             />
           </div>
           {menu}
